@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .logo img {
+            height: 250px;
+            width: auto;
+        }
+        .Clb {
+            text-align: center;
+        }
+        body{
+            background-color: rgb(188, 191, 194);
+        }
+        table{
+            width: 100%;
+        }
+        .logo{
+            width: 30%;
+        }
+        .TenCLB{
+            font-size: 40px;
+            color: rgb(233, 72, 72);
+        }
+    </style>
+</head>
+<body>
+     {{!-- table {
+            color: white;
+        }
+    body {
+            background-image: url("./IMG/bg3.jpg");
+            background-repeat: no-repeat;
+            background-size: 100% 690px;
+            background-color: rgb(18, 18, 97);
+        } --}}
+    <div class="container">
+
+        <table>
+            <tr>
+                <td rowspan="5" class="logo">
+                    <img src={{Club.logourl}}
+                        alt="">
+                </td>
+                <td class="Clb">
+                    <span class="TenCLB"><b>{{Club.ten}}</b></span>
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    <label for="">Nam Thanh Lap :</label> 
+                    <span class="infor">{{Club.namthanhlap}}</span>
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    <label for=""> Huan Luyen Vien : </label> 
+                     <span class="infor">{{Club.tenhlv}}</span>
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+                    <label for="">San Van Dong :</label>
+                    <span class="infor"> {{Club.sannha}} </span>
+
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    <label for="">So Lan Vo Dich : </label>
+                    <span class="infor"> {{Club.sodanhhieu}} </span>
+                </td>
+
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>

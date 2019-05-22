@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .contentmatch {
+            background-color: aqua;
+            padding: 5px;
+            margin-bottom: 10px
+        }
+
+        .contentmatch table {
+            width: 100%;
+            text-align: center;
+        }
+
+        .contentmatch table tr {
+            height: 80px;
+        }
+
+        .contentmatch table .clubimg {
+            height: 40px;
+            width: auto;
+        }
+
+        .contentmatch table .clubmatchhost {
+            width: 37%;
+            text-align: right;
+
+        }
+
+        .contentmatch table span {
+            font-size: 13px;
+        }
+
+        .contentmatch table .clubmatchaway {
+            width: 43%;
+            border-right: 1px solid rgb(192, 183, 183);
+            text-align: left;
+        }
+
+        .round {
+            display: block;
+            margin: 5px;
+            font-size: 20px;
+        }
+
+        .nextround {
+            background-color: brown;
+            height: 80px;
+            width: 80px;
+            text-align: center;
+            color: #ffffff;
+            position: fixed;
+            left: 10px;
+            border-radius: 50%;
+
+        }
+
+        .nextround span {
+            display: block;
+            margin-top: 20px;
+        }
+
+        .nextroundcontent {
+            background-color: rgb(223, 120, 94);
+
+        }
+    </style>
+</head>
+
+<body>
+    <a href="#NextRound">
+        <div class="nextround">
+            <span> Vong dau tiep theo </span>
+        </div>
+    </a>
+    <div class="container ">
+        <div class="row">
+            <div class="matchs">
+
+
+                {{!-- content --}}
+
+                {{!-- big con tai ner --}}
+            </div>
+        </div>
+    </div>
+    <script>
+        $('.nextround').on('click', () => {
+            $('.NextRoundContainer').addClass('nextroundcontent')
+            setTimeout(()=>{
+                $('.NextRoundContainer').removeClass('nextroundcontent')
+            },3000)
+        })
+
+        $.ajax({
+            url: 'trandau',
+            type: 'get',
+            success: function (data) {
+                for (var i = 0; i < data.matchs.length; i = i + 2) {
+                    if (i % 20 == 0) {
+                        if (data.matchs[i].highlightsrc == '1' && data.matchs[i - 1].highlightsrc != '1') {
+                            $('.matchs').append(`
+                                 <span class="round" id="NextRound" > Vong ${data.matchs[i].vongdau}/38</span>
+                            `)
+                        }
+                        else {
+                            $('.matchs').append(`
+                                 <span class="round" > Vong ${data.matchs[i].vongdau}/38</span>
+                            `)
+                        }
+                    }
+                    if (data.matchs[i].highlightsrc == '1') {
+                        if (i < 20 || data.matchs[i - 20].highlightsrc != '1') {
+                            $('.matchs').append(`
+                        <div class="col-sm-6 ">
+                        <div class="contentmatch round${data.matchs[i].vongdau} NextRoundContainer" >
+                            <table>
+                                <tr>
+                                    <td class="clubmatchhost">
+                                         <span> ${data.matchs[i].ten}</span>
+                                        
+                                        <img class="clubimg" src=${data.matchs[i].logourl} alt=""> 
+                                        
+                                    </td>
+                                    <td class="clubmatchaway">    
+                                        <b>&nbsp; VS &nbsp; </b>
+                                         
+                                        <img class="clubimg" src=${data.matchs[i + 1].logourl} alt="">
+                                        
+                                        <span>  ${data.matchs[i + 1].ten} </span>
+                                    </td>
+                                    <td class="time">
+                                        ${data.matchs[i].thoigian} <br>
+                                        22:00
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        </div> 
+                    `)
+                        }
+                        else {
+                            $('.matchs').append(`
+                        <div class="col-sm-6 ">
+                        <div class="contentmatch round${data.matchs[i].vongdau}" >
+                            <table>
+                                <tr>
+                                    <td class="clubmatchhost">
+                                         <span> ${data.matchs[i].ten}</span>
+                                        
+                                        <img class="clubimg" src=${data.matchs[i].logourl} alt=""> 
+                                        
+                                    </td>
+                                    <td class="clubmatchaway">    
+                                        <b>&nbsp; VS &nbsp; </b>
+                                         
+                                        <img class="clubimg" src=${data.matchs[i + 1].logourl} alt="">
+                                        
+                                        <span>  ${data.matchs[i + 1].ten} </span>
+                                    </td>
+                                    <td class="time">
+                                        ${data.matchs[i].thoigian} <br>
+                                        22:00
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        </div> 
+                    `)
+                        }
+                    }
+                    else {
+                        $('.matchs').append(`
+                        <div class="col-sm-6 ">
+                            
+                        <div class="contentmatch" >
+                            
+                            <table>
+                                <tr>
+                                    <td class="clubmatchhost">
+                                         <span> ${data.matchs[i].ten}</span>
+                                        
+                                        <img class="clubimg" src=${data.matchs[i].logourl} alt=""> 
+                                        
+                                    </td>
+                                    <td class="clubmatchaway">
+                                        <a href="http://localhost:6969/match/${data.matchs[i].matran}">    
+                                        <b>&nbsp; ${data.matchs[i].sobandoinha} - ${data.matchs[i].sobandoikhach} &nbsp; </b>
+                                        </a>
+                                        <img class="clubimg" src=${data.matchs[i + 1].logourl} alt="">
+                                        
+                                        <span>  ${data.matchs[i + 1].ten} </span>
+                                    </td>
+                                    <td class="time">
+                                        ${data.matchs[i].thoigian} <br>
+                                        22:00
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        </div> 
+                    `)
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

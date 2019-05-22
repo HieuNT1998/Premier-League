@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>BANG XEP HANG</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=lato:b&&effect=3d" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        {{!-- <style>
+            table, th, td{
+                border: 1px solid black;
+            }
+            th, td{
+                text-align: left;
+                padding: 15px;
+                border-bottom: 1px solid #ddd;
+            }
+            tr:hover {background-color: #f5f5f5;}
+            tr:nth-child(even){background-color: #f2f2f2;}
+            th{
+                background-color: rgba(135, 206, 235, 1);
+                color: white;
+            }
+            *{
+                box-sizing: border-box;
+                font-family: sans-serif;
+                color: #000000;
+            }
+            html, body{
+                padding: 0;
+                margin: 0;
+            }
+        </style> --}}
+        <style>
+             th, td{
+                text-align: left;
+                padding: 15px;
+             }
+             *{
+                font-family: sans-serif;
+                color: #000000;
+            }
+            html, body{
+                padding: 0;
+                margin: 0;
+            }
+            body{
+                background-image: url(https://wallpapercave.com/wp/wp1830649.jpg);
+                background-size:cover;
+            }
+            table{
+                border-collapse: collapse;
+            }
+            .text-bxh{
+                text-align: center;
+                font-family: 'Lato', serif;
+                color:lightgreen;
+                font-weight: bold;
+                
+            }
+        </style>
+    </head>
+    <body>
+        <h1 class="text-bxh font-effect-3d">BẢNG XẾP HẠNG</h1>
+        <div class="container">
+            <table class="table table-borderd table-striped table-hover" width="100%">
+                <thead>
+                    <tr class="active">
+                        <th>Stt</th>
+                        <th>Club</th>
+                        <th>Played</th>
+                        <th>Won</th>
+                        <th>Drawn</th>
+                        <th>Lost</th>
+                        <th>GF</th>
+                        <th>GA</th>
+                        <th>GD</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <script>
+            $.ajax({
+                url :'bangxephang',
+                type: 'get',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                success :function(Data){
+                    for( var i= 0; i<Data.Clb.length;i++){
+                        var clb = Data.Clb[i]
+                        if (i == 0){
+                            var a = "success";
+                        }else if (0 < i && i < 4 ){
+                            a = "info";
+                        }else if ( 3 < i && i < 6){
+                            a = "warning";
+                        }else if (i > Data.Clb.length - 4){
+                            a = "danger";
+                        }else{
+                            a = "active";
+                        }
+                        $('tbody').append(`
+                        <tr class = ${a}>
+                            <td>${i+1}</td>
+                            <td>
+                                <img src= ${String(clb.logourl) } alt="LOGO CLB" style="height: 25px; width: 25px">
+                                <span>${ clb.ten }</span>
+                            </td>
+                            <td>${clb.sotranthang + clb.sotranhoa + clb.sotranthua }</td>
+                            <td>${ clb.sotranthang }</td>
+                            <td>${ clb.sotranhoa }</td>
+                            <td>${ clb.sotranthua }</td>
+                            <td>${ clb.sobanthang }</td>
+                            <td>${ clb.sobanthua }</td>
+                            <td>${ clb.sobanthang - clb.sobanthua }</td>
+                            <td>${ clb.diem }</td>
+                        </tr>`)
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

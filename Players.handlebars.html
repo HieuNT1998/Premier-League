@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<style>
+    body{
+        background-color: rgb(218, 214, 214);
+    }
+    .filter{
+        margin-bottom: 20px;
+        
+    }
+    .filter input{
+        width: 500px;
+        height: 50px;
+        border: none;
+        background-color: rgb(218, 214, 214);
+        border-bottom: 1px solid black;
+        font-size: 25px;
+        
+    }
+    .filter button{
+        height: 30px;
+        width: 30px;
+        position: relative;
+        top: 11px;
+        left: 3px;
+        background-image: url('https://img.icons8.com/metro/1600/search.png');
+        background-size: 25px;
+        background-repeat:no-repeat; 
+        background-position-y: 3px;
+        background-position-x: 3px;
+        border: none;
+        border-radius:50%; 
+    }
+    
+    .filter{
+        position: fixed;
+        top :60px;
+        left: -500px;
+    }
+    .filterOut{
+        left:100px;
+    }
+    .InOut{
+        display: inline-block;
+        height: 30px;
+        width: 30px;
+        position: relative;
+        top :10px;
+        background-image: url("https://image.flaticon.com/sprites/new_packs/112116-arrows-kit.png");
+        background-position-x: -169px;
+        background-position-y: -93px;
+        background-size: 100px;
+    }
+    .InOut:hover{
+        cursor:pointer;
+    }
+    .Out{
+        background-position-x: -169px;
+        background-position-y: -157px;
+        
+    }
+    .tableplayerlist{
+        margin-top: 40px;
+        
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="filter">
+            <input  type="text" placeholder="search name footballer ...">
+            <button class="search" status="in"></button>
+            <span class="InOut In">
+
+            </span>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Players</th>
+                    <th>Club</th>
+                    <th>Position</th>
+                    <th>National</th>
+                </tr>
+            </thead>
+            <tbody class="playerslist">
+
+            </tbody>
+        </table>
+    </div>
+    <script>
+        $('.InOut').on('click',()=>{
+            if($('.search').attr('status')=='in'){
+                $('.filter').addClass('filterOut')
+                $('.search').attr('status','out')
+                $('.InOut').addClass('Out')
+                $('.table').addClass('tableplayerlist')
+            }
+            else{
+                $('.filter').removeClass('filterOut')
+                $('.search').attr('status','in')
+                $('.InOut').removeClass('Out')
+                $('.table').removeClass('tableplayerlist')
+            }
+            
+        })
+        $('.filter input').val('');
+        $.ajax({
+            url: 'getplayers',
+            type: 'get',
+            success: function (data) {
+                for (var i = 0; i < data.players.length; i++) {
+                    $('.playerslist').append(`
+                    
+                        <tr class='playerrow'>
+                            <td><a href="http://localhost:6969/player/${data.players[i].msct}/${data.players[i].tencauthu}">${data.players[i].tencauthu}</a></td>
+                            <td>${data.players[i].ten}</td>
+                            <td>${data.players[i].vitri}</td>
+                            <td>${data.players[i].quoctich}</td>
+                        </tr>
+                    
+                `)
+                }
+            }
+        })
+        
+        $('.search').on('click',()=>{
+            $('.playerslist').empty();
+            var keyword = $('.filter input').val()
+            keyword = keyword.toLowerCase();
+            $.ajax({
+                url:'getplayername',
+                type:'post',
+                contentType: "application/json",
+                data:JSON.stringify({
+                    name:keyword
+                }),
+                success:function(data){
+                    for (var i = 0; i < data.players.length; i++) {
+                    $('.playerslist').append(`
+                    
+                        <tr class='playerrow'>
+                            <td><a href="http://localhost:6969/player/${data.players[i].msct}/${data.players[i].tencauthu}">${data.players[i].tencauthu}</a></td>
+                            <td>${data.players[i].ten}</td>
+                            <td>${data.players[i].vitri}</td>
+                            <td>${data.players[i].quoctich}</td>
+                        </tr>
+                    
+                    `)
+                }
+                }
+            })
+        })
+
+    </script>
+    
+</body>
+
+</html>

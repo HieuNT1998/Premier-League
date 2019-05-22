@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .A_std{
+            background-color: rgb(168, 175, 172);
+            height: 100px;
+            width: 418px;
+            position: absolute;
+            top:36px;
+            left: 416px;
+        }
+        .B_std{
+            background-color: rgb(168, 175, 172);
+            height: 100px;
+            width: 418px;
+            position: absolute;
+            top: 421px;
+            left: 416px;
+        }
+        .D_std{
+            background-color: rgb(168, 175, 172);
+            height: 486px;
+            width: 100px;
+            position: absolute;
+            top:36px;
+            left: 316px;
+            border-top-left-radius: 120px;
+            border-bottom-left-radius: 120px;
+        }
+        .C_std{
+            background-color: rgb(168, 175, 172);
+            height: 486px;
+            width: 100px;
+            position: absolute;
+            top:36px;
+            left: 834px;
+            
+            border-top-right-radius: 120px;
+            border-bottom-right-radius: 120px;
+        }
+        .stadium{
+            height: 500px;
+            width: 100%;
+            background-image: url('http://shopforclipart.com/images/playing-field-cliparts/7.jpg');
+            background-repeat: no-repeat;
+            background-size: 450px;
+            background-position: 400px 120px;
+            position: relative;
+        }
+        .stadium table{
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }        
+        .booked{
+            background-color: red;
+        }
+        .chairs:hover{
+            background-color:red;
+            cursor: pointer;
+        }
+        .choosed{
+            background-color: rgb(245, 100, 100);
+        }
+        .head{
+            text-align: center;
+        }
+        .matran_datve{
+            display: none;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="head">
+        <h3>{{trandau.ten}} - {{trandau1.ten}} </h3>
+        <h3>{{trandau.sanvandong}} Stadium</h3>
+        <span class="matran_datve">{{trandau.matran}}</span>
+    </div>
+    <div class="choosed_contai">
+        <span class="choosed_area"></span>
+        <button type="button" class="btn btn-primary button_choosed">Book</button>
+    </div>
+    <div class="stadium">
+        <div class="A_std">
+            <table>
+                <tr>
+                    <td class="chairs" status='avai' tran={{trandau.matran}} id='1'>
+                        A-a-1
+                    </td>
+                    <td class="chairs" status='avai' tran={{trandau.matran}} id='2'>
+                        A-a-2
+                    </td>
+                    <td class='chairs' status='avai' tran={{trandau.matran}} id='3'>
+                        A-a-3
+                    </td>
+                    <td class="chairs" status='avai' tran={{trandau.matran}} id='4'>
+                        A-a-4
+                    </td>
+                </tr>
+                <tr>
+                    <td class="chairs" status='avai' tran={{trandau.matran}} id='5'>
+                        A-b-1
+                    </td>
+                    <td class='chairs' status='avai' tran={{trandau.matran}} id='6'>
+                        A-b-2
+                    </td>
+                    <td class="chairs" status='avai' tran={{trandau.matran}} id='7'>
+                        A-b-3
+                    </td>
+                    <td class="chairs" status='avai' tran={{trandau.matran}} id='8'>
+                        A-b-4
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+        <div class="C_std">
+            <table>
+                <tr>
+                    <td class="chairs" id='17' status='avai' tran={{trandau.matran}} style="border-top-right-radius:134px;">C-a-1</td>
+                </tr>
+                <tr>
+                    <td class="chairs" id='18' tran={{trandau.matran}} status='avai'>C-a-2</td>
+                </tr>
+                <tr>
+                    <td class="chairs" id='19' tran={{trandau.matran}} status='avai'>C-a-3</td>
+                </tr>
+                <tr>
+                    <td class="chairs" id='20' tran={{trandau.matran}} status='avai'>C-a-4</td>
+                </tr>
+                <tr>
+                    <td class="chairs" id='21' tran={{trandau.matran}} status='avai'>C-a-5</td>
+                </tr>
+                <tr>
+                    <td class="chairs" id='22' tran={{trandau.matran}} status='avai' style="border-bottom-right-radius:134px;">C-a-6</td>
+                </tr>
+            </table>
+        </div>
+        <div class="B_std">
+            <table>
+                <tr>
+                    <td class="chairs" status='avai' tran={{trandau.matran}} id='9'>
+                        B-a-1
+                    </td>
+                    <td class="chairs" status='avai' tran={{trandau.matran}} id='10'>
+                        B-a-2
+                    </td>
+                    <td class='chairs' status='avai' tran={{trandau.matran}} id='11'>
+                        B-a-3
+                    </td>
+                    <td class="chairs" status='avai' tran={{trandau.matran}} id='12'>
+                        B-a-4
+                    </td>
+                </tr>
+                <tr>
+                    <td class="chairs" status='avai' tran={{trandau.matran}} id='13'>
+                        B-b-1
+                    </td>
+                    <td class=' chairs' status='avai' tran={{trandau.matran}} id='14'>
+                        B-b-2
+                    </td>
+                    <td class="chairs" status='avai' tran={{trandau.matran}} id='15'>
+                        B-b-3
+                    </td>
+                    <td class="chairs" status='avai' tran={{trandau.matran}} id='16'>
+                        B-b-4
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+        <div class="D_std">
+            <table>
+                <tr>
+                    <td class="chairs" status='avai' id='23' tran={{trandau.matran}} style="border-top-left-radius:134px;">D-a-1</td>
+                </tr>
+                <tr>
+                    <td class="chairs" status='avai' tran={{trandau.matran}} id='24'>D-a-2</td>
+                </tr>
+                <tr>
+                    <td class="chairs" status='avai' tran={{trandau.matran}} id='25'>D-a-3</td>
+                </tr>
+                <tr>
+                    <td class="chairs" status='avai' tran={{trandau.matran}} id='26'>D-a-4</td>
+                </tr>
+                <tr>
+                    <td class="chairs" status='avai' tran={{trandau.matran}} id='27'>D-a-5</td>
+                </tr>
+                <tr>
+                    <td class="chairs   aaa" status='avai' tran={{trandau.matran}} id='28' style="border-bottom-left-radius:134px;">D-a-6</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+
+        var matran = $('.matran_datve').text();
+        var cost = []
+        var bookednumber = 0;
+        $.ajax({
+            url:'/cost',
+            type:'get',
+            success:function(data){
+                for(var i=0;i<data.cost.length;i++){
+                    cost.push(data.cost[i].gia)
+                }
+                //console.log(cost);
+            }
+        })
+        $.ajax({
+            url:'/bookednum',
+            type:'post',
+            contentType: "application/json",
+            data:JSON.stringify({
+                userName : $.session.get('userName'),
+                matran : matran
+            }),
+            success: function(data){
+                console.log(data.bookednum);
+                if($.session.get('userName')){
+                    bookednumber += parseInt(data.bookednum.count)
+                }
+                console.log(bookednumber)
+            }
+        })
+        $.ajax({
+            url: `/getbooked/${matran}`,
+            type: 'get',
+            success: function (data) {
+                for (var i = 0; i < data.tickets.length; i++) {
+                    $('#' + data.tickets[i].maghe).addClass('booked');
+                    $('#' + data.tickets[i].maghe).attr('status','booked');
+                    
+                }
+            }
+        })
+        $('.chairs').on('click', () => {
+            var ele = $(event.target);
+            if (ele.attr('status') == 'avai') {
+                ele.addClass('choosed')
+                ele.attr('status', 'choosed')
+                $('.choosed_area').append(`
+                    <b> &nbsp; ${ele.text()} &nbsp; </b>
+                `)
+            }
+            else if (ele.attr('status') == 'choosed') {
+                ele.removeClass('choosed')
+                ele.attr('status', 'avai')
+                var Ele = $('.choosed');
+                $('.choosed_area').html('')
+                for (var i = 0; i < Ele.length; i++) {
+                    $('.choosed_area').append(`
+                        <b> &nbsp; ${$(Ele[i]).text()} &nbsp; </b>
+                    `)
+                }
+            }
+        })
+        var sum=0;
+        $('.button_choosed').on('click', () => {
+            var ele = $('.choosed');
+            if ((ele.length + bookednumber) > 3) {
+                alert('Ban chi dc dat toi da 3 ve');
+            }
+            else {
+                var choosed = [];
+                for (var i = 0; i < ele.length; i++) {
+                    choosed.push($(ele[i]).attr('id'))
+                }
+                var username = $.session.get('userName');
+                if (username) {
+                    var data = {
+                        'userName': username,
+                        'chairs': choosed,
+                        'matran': matran
+                    }
+                    for(var i=0; i<choosed.length;i++ ){
+                        sum += cost[choosed[i]-1];
+                    }
+
+                    $.ajax({
+                        url: '/booktickets',
+                        type: 'post',
+                        contentType: "application/json",
+                        data: JSON.stringify({
+                            data
+                        }),
+                        success: function (data) {
+                            if(data.success ==1 ){
+                                alert("Chuc Mung Ban Da Dat Ve Thanh Cong Tong so tien cua ban la :" + sum);
+                                window.location.href = "http://localhost:6969/datve/"+matran;
+                            }
+                        }
+                    })
+                }
+                else {
+                    alert('Ban Can Phai Dang Nhap De Co The Dat Ve')
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

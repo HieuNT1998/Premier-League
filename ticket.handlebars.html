@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ticket</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .ticket-option{
+            position: relative;
+            right: -125px;
+            padding-bottom: 20px;
+            margin: 0px 10px;
+            display: inline-block;
+        }
+        .dropbtn{
+            background-color: #4CAF50;
+            colot: white;
+            padding:  10px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        .dropdown{
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content{
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            padding: 12px 16px;
+            z-index: 1;
+        }
+        .dropdown-content a{
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover{background-color: #f1f1f1}
+
+        .dropdown:hover .dropdown-content{
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn{
+            background-color: #3e8e41;
+        }
+        .title-option{
+            position: relative;
+            right: -125px;
+            margin: 10px 10px 0px;
+            display: inline-block;
+        }
+        .text-option{
+            text-align: center;
+            padding: 15px;
+            font-weight: bold;
+            font-size: 17px;
+        }
+        html, body{
+            padding: 0;
+            margin: 0;
+        }
+        table{
+            border-collapse: collapse;
+        }
+        select{
+            margin: 15px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="title-option">
+        <span class="text-option">Vòng đấu</span>
+        <span class="text-option">Đội bóng</span>
+    </div>
+    <br>
+    <div class="ticket-option">
+        <select id="vd"> 
+            <option value="None">None</option>
+        </select>
+        <select id="db">
+            <option value="None">None</option>
+        </select>
+        <button type="button" class="btn btn-primary">Submit</button>
+    </div>
+    <div class="container" >
+        <table id="infor-result" class="table table-bordered table-striped table-hover" width="100%">
+            <thead></thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <script>
+        $('.ticket-option button').on('click',()=>{
+            var doi_bong = document.getElementById('db');
+            var vong_dau = document.getElementById('vd');
+            $.ajax({
+                url: '/getMatchInfor',
+                type: 'get',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                success: function(Data){
+                    $('thead').html('')
+                    $('tbody').html('')
+                    $('thead').append(`
+                        <tr class="success">
+                            <th>Mã trận</th>
+                            <th>Vòng đấu</th>
+                            <th>Đội nhà</th>
+                            <th>Đội khách</th>
+                            <th>Sân vận động</th>
+                            <th>Thời gian</th>
+                            <th>Trạng thái </th>
+                            <th>Đăng kí</th>
+                        <tr>`);
+                    for(var i=0; i<Data.Infor.length; i+=2){
+                        if( doi_bong.value != 'None' && vong_dau.value != 'None'){
+                            alert('False');
+                            if((doi_bong.value == Data.Infor[i].ten || doi_bong.value == Data.Infor[i+1].ten) &&  (vong_dau.value == Data.Infor[i].vongdau)) 
+                            {   
+                                var infor = Data.Infor[i]
+                                if(infor.trangthai == 'chuadau'){
+                                    $('tbody').append(`
+                                    <tr>
+                                        <td>${infor.matran}</td>
+                                        <td>${infor.vongdau}</td>
+                                        <td>${Data.Infor[i].ten}</td>
+                                        <td>${Data.Infor[i+1].ten}</td>
+                                        <td>${infor.sannha}</td>
+                                        <td>${infor.thoigian}</td>
+                                        <td>${infor.trangthai}</td>
+                                        <td>
+                                            <a href="datve/${infor.matran}">Đặt vé</a>
+                                        </td>
+                                    </tr>
+                                    `);
+                                }else{
+                                    $('tbody').append(`
+                                    <tr>
+                                        <td>${infor.matran}</td>
+                                        <td>${infor.vongdau}</td>
+                                        <td>${Data.Infor[i].ten}</td>
+                                        <td>${Data.Infor[i+1].ten}</td>
+                                        <td>${infor.sannha}</td>
+                                        <td>${infor.thoigian}</td>
+                                        <td>${infor.trangthai}</td>
+                                        <td>Đã đá</td>
+                                    </tr>
+                                    `);
+                                }
+                            }
+                        }
+                        else if((doi_bong.value == Data.Infor[i].ten || doi_bong.value == Data.Infor[i+1].ten) ||  vong_dau.value == Data.Infor[i].vongdau) {
+                                var infor = Data.Infor[i]
+                                if(infor.trangthai == 'chuadau'){
+                                    $('tbody').append(`
+                                    <tr>
+                                        <td>${infor.matran}</td>
+                                        <td>${infor.vongdau}</td>
+                                        <td>${Data.Infor[i].ten}</td>
+                                        <td>${Data.Infor[i+1].ten}</td>
+                                        <td>${infor.sannha}</td>
+                                        <td>${infor.thoigian}</td>
+                                        <td>${infor.trangthai}</td>
+                                        <td>
+                                            <a href="datve/${infor.matran}">Đặt vé</a>
+                                        </td>
+                                    </tr>
+                                    `);
+                                }else{
+                                    $('tbody').append(`
+                                    <tr>
+                                        <td>${infor.matran}</td>
+                                        <td>${infor.vongdau}</td>
+                                        <td>${Data.Infor[i].ten}</td>
+                                        <td>${Data.Infor[i+1].ten}</td>
+                                        <td>${infor.sannha}</td>
+                                        <td>${infor.thoigian}</td>
+                                        <td>${infor.trangthai}</td>
+                                        <td>Đã đá</td>
+                                    </tr>
+                                    `);
+                                }
+                        }
+                        else{
+                            continue;
+                        }
+                    }
+                }
+            }) 
+        })
+        for(var i=0; i<10; i++){
+            $('#vd').append(`<option value="${i+1}">Vòng ${i+1}</option>`)
+        }
+        $.ajax({
+            url: '/getticket',
+            type: 'get',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            success: function(Data){
+                for(var i=0; i < Data.Clb.length; i++){
+                    var clb = Data.Clb[i]
+                    $('#db').append(`<option value="${clb.ten}"> ${clb.ten} </option>`)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

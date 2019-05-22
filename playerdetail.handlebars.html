@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: rgb(188, 191, 194);
+        }
+        .avatar img{
+            height: 150px;
+            width: auto;
+        }
+        table{
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>{{player.tencauthu}}</h3>
+        <table>
+            <tr>
+                <td rowspan="4" class="avatar">
+                    <img src={{player.avatarurl}} alt="">
+                </td>
+                <td>
+                    <b> Quoc Tich </b>: {{player.quoctich}}
+                </td>
+                <td>
+                    <b> Cau Lac Bo </b> : {{player.caulacbo}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b> So Ao </b>  : {{player.soao}}
+                </td>
+                <td>
+                    <b>Vi Tri</b> : {{player.vitri}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Nam Sinh</b> : {{player.ngaysinh}}
+                </td>
+                <td> 
+                    <b>Chieu Cao</b> : {{player.chieucao}} cm
+                </td>
+                <td> 
+                    <b>Can Nang</b> : {{player.cannang}} kg
+                </td>
+            </tr>
+            <tr>
+                <td> 
+                    <b>Ban Thang</b>: {{player.soban}}
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

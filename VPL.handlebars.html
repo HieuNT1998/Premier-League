@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<table style="width:100%" class="vuaphaluoi_list">
+  <tr>
+    <th>STT</th>
+    <th>Ten</th> 
+    <th>Tuoi</th>
+    <th>TenCLB</th>
+    <th>SoBan</th>
+  </tr>
+  </table>
+<script type="text/javascript">
+  $.ajax({
+      url:'/getvuaphaluoi',
+      type:'get',
+      success:function(data){
+          for(var i=0; i < data.players.length; i++){
+            console.log(data.players);
+            $('.vuaphaluoi_list').append(`
+                  <tr>
+                    <td>${i+1}</td>
+                    <td>${data.players[i].tencauthu}</td> 
+                    <td>${data.players[i].tuoi}</td>
+                    <td>${data.players[i].tenclb}</td>
+                    <td>${data.players[i].soban}</td>
+                  </tr>
+              `)
+          }
+      }
+  })
+</script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Premier League</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="icon" href="https://vignette.wikia.nocookie.net/thejackie/images/6/66/Premier-League-Logo.png/revision/latest?cb=20131024155152">
+    <script src="../jquerysession.js"> </script>
+    <style>
+        .navbar1 {
+            background-color: #41003E;
+            height: 60px;
+            width: 100%;
+            position: fixed;
+            top:0px;
+            z-index: 2;
+            
+        }
+        .body{
+            z-index: 1;
+            margin-top: 80px;
+        }
+        .navbar1 .nav {
+            color: aliceblue;
+            display: inline-block;
+            height: 60px;
+            width: 100%;
+            line-height: 60px;
+        }
+
+        .nav:hover {
+            cursor: pointer;
+
+        }
+
+        .login {
+            color: white;
+            font-size: 20px;
+        }
+        .loginlogout{
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar1">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-2">
+                    <span>
+                        <a href="/">
+                            <img src="https://www.premierleague.com/resources/ver/i/elements/premier-league-logo-header-mob.svg"
+                                alt="">
+                        </a>
+                    </span>
+                </div>
+                <div class="col-sm-1 ">
+                    <a href="http://localhost:6969/match">
+                        <span class="nav">
+                            Lich Thi dau
+                        </span>
+                    </a>
+
+                </div>
+                <div class="col-sm-1">
+                    <a href="http://localhost:6969/clubs">
+                        <span class="nav">
+                            Cau Lac Bo
+                        </span>
+                    </a>
+                </div>
+                <div class="col-sm-1">
+                    <a href="http://localhost:6969/players">
+                        <span class="nav">
+                            Cau Thu
+                        </span>
+                    </a>
+                </div>
+                <div class="col-sm-1">
+                    <a href="http://localhost:6969/bxh">
+                        <span class="nav">
+                            Table
+                        </span>
+                    </a>
+                </div>
+                <div class="col-sm-1">
+                    <a href="http://localhost:6969/vuaphaluoi">
+                        <span class="nav">
+                            Top Score
+                        </span>
+                    </a>
+                </div>
+                 <div class="col-sm-1">
+                    <a href="http://localhost:6969/ticket">
+                        <span class="nav">
+                            Dat ve
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="body">
+        {{{body}}}
+    </div>
+    
+    <script>
+        
+        if($.session.get('userName')){
+            $('.navbar1 .row').append(`
+                <div class="col-sm-3 loginlogout">
+                    <span class='login nav'>
+                        ${$.session.get('userName')}
+                        <a href="http://localhost:6969"> <span class='logout login'>  logout </a> 
+                    </span>
+                </div>
+            `);
+        }
+        else{
+            $('.navbar1 .row').append(`
+                <div class="col-sm-3 loginlogout">
+                    <a href="http://localhost:6969/login"> <span class="login nav">login</span> </a>
+                </div>
+            `)
+        }
+
+        $('.logout').on('click',()=>{
+            $.session.remove('userName');
+        })
+
+    </script>
+    
+</body>
+
+</html>

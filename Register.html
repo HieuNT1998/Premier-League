@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Login</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+      (function ($) {
+  
+        $.session = {
+  
+          _id: null,
+  
+          _cookieCache: undefined,
+  
+          _init: function () {
+            if (!window.name) {
+              window.name = Math.random();
+            }
+            this._id = window.name;
+            this._initCache();
+  
+            // See if we've changed protcols
+  
+            var matches = (new RegExp(this._generatePrefix() + "=([^;]+);")).exec(document.cookie);
+            if (matches && document.location.protocol !== matches[1]) {
+              this._clearSession();
+              for (var key in this._cookieCache) {
+                try {
+                  window.sessionStorage.setItem(key, this._cookieCache[key]);
+                } catch (e) { };
+              }
+            }
+  
+            document.cookie = this._generatePrefix() + "=" + document.location.protocol + ';path=/;expires=' + (new Date((new Date).getTime() + 120000)).toUTCString();
+  
+          },
+  
+          _generatePrefix: function () {
+            return '__session:' + this._id + ':';
+          },
+  
+          _initCache: function () {
+            var cookies = document.cookie.split(';');
+            this._cookieCache = {};
+            for (var i in cookies) {
+              var kv = cookies[i].split('=');
+              if ((new RegExp(this._generatePrefix() + '.+')).test(kv[0]) && kv[1]) {
+                this._cookieCache[kv[0].split(':', 3)[2]] = kv[1];
+              }
+            }
+          },
+  
+          _setFallback: function (key, value, onceOnly) {
+            var cookie = this._generatePrefix() + key + "=" + value + "; path=/";
+            if (onceOnly) {
+              cookie += "; expires=" + (new Date(Date.now() + 120000)).toUTCString();
+            }
+            document.cookie = cookie;
+            this._cookieCache[key] = value;
+            return this;
+          },
+  
+          _getFallback: function (key) {
+            if (!this._cookieCache) {
+              this._initCache();
+            }
+            return this._cookieCache[key];
+          },
+  
+          _clearFallback: function () {
+            for (var i in this._cookieCache) {
+              document.cookie = this._generatePrefix() + i + '=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            }
+            this._cookieCache = {};
+          },
+  
+          _deleteFallback: function (key) {
+            document.cookie = this._generatePrefix() + key + '=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            delete this._cookieCache[key];
+          },
+  
+          get: function (key) {
+            return window.sessionStorage.getItem(key) || this._getFallback(key);
+          },
+  
+          set: function (key, value, onceOnly) {
+            try {
+              window.sessionStorage.setItem(key, value);
+            } catch (e) { }
+            this._setFallback(key, value, onceOnly || false);
+            return this;
+          },
+  
+          'delete': function (key) {
+            return this.remove(key);
+          },
+  
+          remove: function (key) {
+            try {
+              window.sessionStorage.removeItem(key);
+            } catch (e) { };
+            this._deleteFallback(key);
+            return this;
+          },
+  
+          _clearSession: function () {
+            try {
+              window.sessionStorage.clear();
+            } catch (e) {
+              for (var i in window.sessionStorage) {
+                window.sessionStorage.removeItem(i);
+              }
+            }
+          },
+  
+          clear: function () {
+            this._clearSession();
+            this._clearFallback();
+            return this;
+          }
+  
+        };
+  
+        $.session._init();
+  
+      })(jQuery)
+    </script>
+</head>
+
+<body>
+
+  <style>
+    .btn-cust{
+    margin-top:  20px;
+  }
+  .form-group{
+    margin-bottom: 15px;
+    margin-top: 15px;
+  }
+</style>
+
+  <div class="container">
+    <h2>Premier League Register</h2>
+    <form>
+      <div class="form-group">
+        <label for="text">UserName:</label>
+        <input type="text" class="form-control" id="user" placeholder="Enter UserName" name="username">
+      </div>
+      <div class="form-group">
+        <label for="pwd">Password:</label>
+        <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
+      </div>
+      <div class="form-group">
+        <label for="pwd">Re-enter Password:</label>
+        <input type="password" class="form-control" id="rpwd" placeholder="Enter password" name="pwd">
+      </div>
+      <div class="form-group">
+        <label for="text">Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter Name" name="name">
+      </div>
+      <div class="form-group">
+        <label for="text">Gender</label>
+        <br>
+        <select name="gender" class="form-control" id="gd">
+          <option value="none">None</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="date">Birthday:</label>
+        <input type="text" placeholder="Enter your birthday" class="form-control" id="datepicker" name="date">
+      </div>
+      <div class="form-group">
+        <label for="text">Address:</label>
+        <input type="text" class="form-control" name="address" placeholder="Enter address" id="adr">
+      </div>
+      <button type="button" id="submit" class="btn btn-cust btn-success">Submit</button>
+    </form>
+  </div>
+  <script>
+    $('#submit').on('click', () => {
+      var user = $('#user').val();
+      var pass = $('#pwd').val();
+      var rpass = $('#rpwd').val();
+      var name = $('#name').val();
+      var address = $('#adr').val();
+      var Gender = $('#gd').val();
+      var Birthday = $('#datepicker').val();
+      console.log(Birthday);
+      if (pass != rpass) alert('Mat khau xac nhan ko dung');
+      else {
+        $.ajax({
+          url: 'registerdata',
+          type: 'POST',
+          contentType: "application/json",
+          data: JSON.stringify({
+            username : user,
+            password : pass,
+            name : name,
+            Birthday :Birthday,
+            Gender :Gender,
+            address :address
+          }),
+          success: function (body) {
+            console.log('aaaaaaaa'+body);
+            if(body.success==1){
+                // console.log(body)
+                
+                $.session.set('userName', user),
+                window.location.href = "http://localhost:6969";
+            }
+          }
+        })
+      }
+    })
+  </script>
+  <script>
+    $(function () {
+      $("#datepicker").datepicker({dateFormat:'yy/mm/dd'});
+    });
+  </script>
+</body>
+
+</html>
